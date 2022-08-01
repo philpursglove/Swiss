@@ -8,6 +8,18 @@ public class Pairer
 
         List<Game> games = new List<Game>();
 
+        if (players.TrueForAll(p => p.Points == 0))
+        {
+            games = RandomPairing(players);
+        }
+
+        return games;
+    }
+
+    private static List<Game> RandomPairing(List<Player> players)
+    {
+        List<Game> games = new List<Game>();
+
         while (players.Any())
         {
             Game newGame = new Game();
@@ -16,7 +28,7 @@ public class Pairer
 
             if (!players.Any())
             {
-                newGame.Player2 = new Player() { Name = "BYE" };
+                newGame.Player2 = new Player() {Name = "BYE"};
             }
             else
             {

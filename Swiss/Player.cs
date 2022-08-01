@@ -6,4 +6,6 @@ public class Player
 
     public bool Dropped { get; set; }
 
+    public int Points { get; set; }
+
 }
