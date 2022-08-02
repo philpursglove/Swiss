@@ -24,8 +24,7 @@ public class Pairer
     {
         List<Game> games = new List<Game>();
 
-        // TODO Add Distinct here
-        IEnumerable<int> brackets = players.Select(p => p.Points);
+        IEnumerable<int> brackets = players.Select(p => p.Points).Distinct();
 
         foreach (var bracket in brackets)
         {
