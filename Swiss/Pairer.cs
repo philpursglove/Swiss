@@ -1,4 +1,6 @@
-﻿namespace Swiss;
+﻿using System.Threading.Tasks.Dataflow;
+
+namespace Swiss;
 
 public class Pairer
 {
@@ -23,12 +25,26 @@ public class Pairer
     private List<Game> PointsPairing(List<Player> players)
     {
         List<Game> games = new List<Game>();
+        List<Bracket> brackets = new List<Bracket>();
 
-        IEnumerable<int> brackets = players.Select(p => p.Points).Distinct();
+        IEnumerable<int> bracketPoints = players.Select(p => p.Points).Distinct().OrderByDescending(p => p);
 
-        foreach (var bracket in brackets)
+        foreach (var bracketPoint in bracketPoints)
         {
-            List<Player> bracketPlayers = players.Where(p => p.Points == bracket).ToList();
+            Bracket bracket = new Bracket()
+                {Points = bracketPoint, Players = players.Where(p => p.Points == bracketPoint).ToList()};
+            brackets.Add(bracket);
+        }
+
+        for (int i = 0; i < brackets.Count; i++)
+        {
+            List<Player> bracketPlayers = brackets[i].Players;
+            if (bracketPlayers.Count % 2 == 1)
+            {
+                Player pairedUp = brackets[i + 1].Players.Random();
+                bracketPlayers.Add(pairedUp);
+                brackets[i + 1].Players.Remove(pairedUp);
+            }
 
             while (bracketPlayers.Any())
             {
@@ -48,6 +64,7 @@ public class Pairer
 
                 games.Add(newGame);
             }
+
         }
 
         return games;   
@@ -78,4 +95,10 @@ public class Pairer
 
         return games;
     }
+}
+
+public class Bracket
+{
+    public int Points { get; set; }
+    public List<Player> Players { get; set; }
 }

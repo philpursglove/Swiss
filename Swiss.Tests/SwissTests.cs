@@ -142,7 +142,26 @@ namespace Swiss.Tests
             // One of bob or charlie must be paired with alice
             // One of bob or charlie must be paired with dave
 
-            Assert.That(false, Is.EqualTo(true));
+            List<Player> middlePlayers = new List<Player>() {bob, charlie};
+
+            Game firstGame = result.First(g => g.Player1 == alice || g.Player2 == alice);
+            if (firstGame.Player1 == alice)
+            {
+                Assert.That(middlePlayers.Contains(firstGame.Player2));
+            }
+            else
+            {
+                Assert.That(middlePlayers.Contains(firstGame.Player1));
+            }
+            Game lastGame = result.First(g => g.Player1 == dave || g.Player2 == dave);
+            if (lastGame.Player1 == dave)
+            {
+                Assert.That(middlePlayers.Contains(firstGame.Player2));
+            }
+            else
+            {
+                Assert.That(middlePlayers.Contains(firstGame.Player1));
+            }
         }
     }
 }
