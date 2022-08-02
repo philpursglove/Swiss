@@ -163,5 +163,28 @@ namespace Swiss.Tests
                 Assert.That(middlePlayers.Contains(firstGame.Player1));
             }
         }
+
+        [Test]
+        public void Where_Brackets_Finish_With_An_Odd_Number_In_The_Last_Group_The_Last_Game_Is_A_Bye()
+        {
+            Player alice = new Player() { Name = "Alice", Points = 3 };
+            Player bob = new Player() { Name = "Bob", Points = 1 };
+            Player charlie = new Player() { Name = "Charlie", Points = 1 };
+            Player dave = new Player() { Name = "Dave", Points = 0 };
+            Player ed = new Player() {Name = "Ed", Points = 0};
+            Player fred = new Player() { Name = "Fred", Points = 0,Dropped = true};
+
+            List<Player> players = new List<Player>() { alice, bob, charlie, dave, ed, fred};
+
+            Pairer pairer = new Pairer();
+
+            var result = pairer.Pair(players);
+
+            // One of bob or charlie must be paired with alice
+            // One of bob or charlie must be paired with dave
+
+            Game lastGame = result.First(g => g.Player1 == ed);
+            Assert.That(lastGame.Player2.Name, Is.EqualTo("BYE"));
+        }
     }
 }

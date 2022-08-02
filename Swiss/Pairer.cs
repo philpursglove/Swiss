@@ -32,7 +32,7 @@ public class Pairer
         foreach (var bracketPoint in bracketPoints)
         {
             Bracket bracket = new Bracket()
-                {Points = bracketPoint, Players = players.Where(p => p.Points == bracketPoint).ToList()};
+            { Points = bracketPoint, Players = players.Where(p => p.Points == bracketPoint).ToList() };
             brackets.Add(bracket);
         }
 
@@ -41,9 +41,12 @@ public class Pairer
             List<Player> bracketPlayers = brackets[i].Players;
             if (bracketPlayers.Count % 2 == 1)
             {
-                Player pairedUp = brackets[i + 1].Players.Random();
-                bracketPlayers.Add(pairedUp);
-                brackets[i + 1].Players.Remove(pairedUp);
+                if (i < brackets.Count - 1)
+                {
+                    Player pairedUp = brackets[i + 1].Players.Random();
+                    bracketPlayers.Add(pairedUp);
+                    brackets[i + 1].Players.Remove(pairedUp);
+                }
             }
 
             while (bracketPlayers.Any())
@@ -67,7 +70,7 @@ public class Pairer
 
         }
 
-        return games;   
+        return games;
     }
 
     private List<Game> RandomPairing(List<Player> players)
@@ -82,7 +85,7 @@ public class Pairer
 
             if (!players.Any())
             {
-                newGame.Player2 = new Player() {Name = "BYE"};
+                newGame.Player2 = new Player() { Name = "BYE" };
             }
             else
             {
