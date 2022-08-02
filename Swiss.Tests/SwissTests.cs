@@ -1,7 +1,7 @@
 namespace Swiss.Tests
 {
     [TestFixture]
-    public class Tests
+    public class SwissTests
     {
         [SetUp]
         public void Setup()
@@ -89,6 +89,60 @@ namespace Swiss.Tests
             var game = result.Last();
 
             Assert.That(game.Player2.Name, Is.EqualTo("BYE"));
+        }
+
+        [Test]
+        public void Players_Get_Matched_With_Players_On_Equal_Points()
+        {
+            Player alice = new Player() { Name = "Alice", Points = 3};
+            Player bob = new Player() { Name = "Bob", Points = 3};
+            Player charlie = new Player() { Name = "Charlie", Points = 0};
+            Player dave = new Player() { Name = "Dave", Points = 0};
+
+            List<Player> players = new List<Player>() { alice, bob, charlie, dave };
+
+            Pairer pairer = new Pairer();
+
+            var result = pairer.Pair(players);
+
+            var game = result.First(g => g.Player1 == alice || g.Player2 == alice);
+            if (game.Player1 == alice)
+            {
+                Assert.That(game.Player2, Is.EqualTo(bob));
+            }
+            else
+            {
+                Assert.That(game.Player1, Is.EqualTo(bob));
+            }
+            game = result.First(g => g.Player1 == charlie || g.Player2 == charlie);
+            if (game.Player1 == charlie)
+            {
+                Assert.That(game.Player2, Is.EqualTo(dave));
+            }
+            else
+            {
+                Assert.That(game.Player1, Is.EqualTo(dave));
+            }
+        }
+
+        [Test]
+        public void Where_A_Bracket_Has_An_Odd_Number_Of_Players_A_Random_Player_From_The_Next_Bracket_Is_Paired_Up()
+        {
+            Player alice = new Player() { Name = "Alice", Points = 3 };
+            Player bob = new Player() { Name = "Bob", Points = 1 };
+            Player charlie = new Player() { Name = "Charlie", Points = 1 };
+            Player dave = new Player() { Name = "Dave", Points = 0 };
+
+            List<Player> players = new List<Player>() { alice, bob, charlie, dave };
+
+            Pairer pairer = new Pairer();
+
+            var result = pairer.Pair(players);
+
+            // One of bob or charlie must be paired with alice
+            // One of bob or charlie must be paired with dave
+
+            Assert.That(false, Is.EqualTo(true));
         }
     }
 }
