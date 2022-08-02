@@ -35,7 +35,7 @@ public class Pairer
             {
                 Game newGame = new Game();
                 newGame.Player1 = bracketPlayers.Random();
-                pointsPlayers.Remove(newGame.Player1);
+                bracketPlayers.Remove(newGame.Player1);
 
                 if (!bracketPlayers.Any())
                 {
