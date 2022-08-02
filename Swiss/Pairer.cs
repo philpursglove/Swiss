@@ -24,26 +24,27 @@ public class Pairer
     {
         List<Game> games = new List<Game>();
 
-        IEnumerable<int> pointsList = players.Select(p => p.Points);
+        // TODO Add Distinct here
+        IEnumerable<int> brackets = players.Select(p => p.Points);
 
-        foreach (var points in pointsList)
+        foreach (var bracket in brackets)
         {
-            List<Player> pointsPlayers = players.Where(p => p.Points == points).ToList();
+            List<Player> bracketPlayers = players.Where(p => p.Points == bracket).ToList();
 
-            while (pointsPlayers.Any())
+            while (bracketPlayers.Any())
             {
                 Game newGame = new Game();
-                newGame.Player1 = pointsPlayers.Random();
+                newGame.Player1 = bracketPlayers.Random();
                 pointsPlayers.Remove(newGame.Player1);
 
-                if (!pointsPlayers.Any())
+                if (!bracketPlayers.Any())
                 {
                     newGame.Player2 = new Player() { Name = "BYE" };
                 }
                 else
                 {
-                    newGame.Player2 = pointsPlayers.Random();
-                    pointsPlayers.Remove(newGame.Player2);
+                    newGame.Player2 = bracketPlayers.Random();
+                    bracketPlayers.Remove(newGame.Player2);
                 }
 
                 games.Add(newGame);
