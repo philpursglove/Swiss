@@ -156,11 +156,11 @@ namespace Swiss.Tests
             Game lastGame = result.First(g => g.Player1 == dave || g.Player2 == dave);
             if (lastGame.Player1 == dave)
             {
-                Assert.That(middlePlayers.Contains(firstGame.Player2));
+                Assert.That(middlePlayers.Contains(lastGame.Player2));
             }
             else
             {
-                Assert.That(middlePlayers.Contains(firstGame.Player1));
+                Assert.That(middlePlayers.Contains(lastGame.Player1));
             }
         }
 
@@ -183,7 +183,7 @@ namespace Swiss.Tests
             // One of bob or charlie must be paired with alice
             // One of bob or charlie must be paired with dave
 
-            Game lastGame = result.First(g => g.Player1 == ed);
+            Game lastGame = result.Last();
             Assert.That(lastGame.Player2.Name, Is.EqualTo("BYE"));
         }
     }
