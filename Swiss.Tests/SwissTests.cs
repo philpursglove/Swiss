@@ -186,5 +186,29 @@ namespace Swiss.Tests
             Game lastGame = result.Last();
             Assert.That(lastGame.Player2.Name, Is.EqualTo("BYE"));
         }
+
+        [Test]
+        public void In_The_Last_Bracket_Assign_The_Bye_To_A_Player_Who_Has_Not_Had_A_Bye()
+        {
+            Player alice = new Player() { Name = "Alice", Points = 3 };
+            Player bob = new Player() { Name = "Bob", Points = 3 };
+            Player charlie = new Player() { Name = "Charlie", Points = 1 };
+            Player dave = new Player() { Name = "Dave", Points = 1 };
+            Player ed = new Player() { Name = "Ed", Points = 0, Bye = true };
+            Player fred = new Player() { Name = "Fred", Points = 0, Bye = true};
+            Player george = new Player() { Name = "George", Points = 0 };
+
+            List<Player> players = new List<Player>() { alice, bob, charlie, dave, ed, fred };
+
+            Pairer pairer = new Pairer();
+
+            var result = pairer.Pair(players);
+
+            Game lastGame = result.Last();
+            Assert.That(lastGame.Player1.Name, Is.EqualTo("George"));
+            Assert.That(lastGame.Player2.Name, Is.EqualTo("BYE"));
+        }
+
+        // Test for games not being repeated
     }
 }

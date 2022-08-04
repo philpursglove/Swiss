@@ -8,4 +8,6 @@ public class Player
 
     public int Points { get; set; }
 
+    public bool Bye { get; set; }
+
 }
