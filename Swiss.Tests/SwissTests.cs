@@ -212,6 +212,10 @@ namespace Swiss.Tests
             Assert.That(lastGame.Player2.Name, Is.EqualTo("BYE"));
         }
 
-        // Test for games not being repeated
+        [Test]
+        public void Avoid_Repeated_Games()
+        {
+            Assert.That(true, Is.False);
+        }
     }
 }
