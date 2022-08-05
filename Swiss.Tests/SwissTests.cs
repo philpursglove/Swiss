@@ -94,10 +94,10 @@ namespace Swiss.Tests
         [Test]
         public void Players_Get_Matched_With_Players_On_Equal_Points()
         {
-            Player alice = new Player() { Name = "Alice", Points = 3};
-            Player bob = new Player() { Name = "Bob", Points = 3};
-            Player charlie = new Player() { Name = "Charlie", Points = 0};
-            Player dave = new Player() { Name = "Dave", Points = 0};
+            Player alice = new Player() { Name = "Alice", Points = 3 };
+            Player bob = new Player() { Name = "Bob", Points = 3 };
+            Player charlie = new Player() { Name = "Charlie", Points = 0 };
+            Player dave = new Player() { Name = "Dave", Points = 0 };
 
             List<Player> players = new List<Player>() { alice, bob, charlie, dave };
 
@@ -128,12 +128,13 @@ namespace Swiss.Tests
         [Test]
         public void Where_A_Bracket_Has_An_Odd_Number_Of_Players_A_Random_Player_From_The_Next_Bracket_Is_Paired_Up()
         {
-            Player alice = new Player() { Name = "Alice", Points = 3 };
-            Player bob = new Player() { Name = "Bob", Points = 1 };
-            Player charlie = new Player() { Name = "Charlie", Points = 1 };
-            Player dave = new Player() { Name = "Dave", Points = 0 };
-
-            List<Player> players = new List<Player>() { alice, bob, charlie, dave };
+            List<Player> players = new List<Player>()
+            {
+                new Player() { Name = "Alice", Points = 3 },
+                new Player() { Name = "Bob", Points = 1 },
+                new Player() { Name = "Charlie", Points = 1 },
+                new Player() { Name = "Dave", Points = 0 }
+            };
 
             Pairer pairer = new Pairer();
 
@@ -142,10 +143,10 @@ namespace Swiss.Tests
             // One of bob or charlie must be paired with alice
             // One of bob or charlie must be paired with dave
 
-            List<Player> middlePlayers = new List<Player>() {bob, charlie};
+            IEnumerable<Player> middlePlayers = players.Where(p => p.Name == "Bob" || p.Name == "Charlie");
 
-            Game firstGame = result.First(g => g.Player1 == alice || g.Player2 == alice);
-            if (firstGame.Player1 == alice)
+            Game firstGame = result.First(g => g.Player1.Name == "Alice" || g.Player2.Name == "Alice");
+            if (firstGame.Player1.Name == "Alice")
             {
                 Assert.That(middlePlayers.Contains(firstGame.Player2));
             }
@@ -153,8 +154,8 @@ namespace Swiss.Tests
             {
                 Assert.That(middlePlayers.Contains(firstGame.Player1));
             }
-            Game lastGame = result.First(g => g.Player1 == dave || g.Player2 == dave);
-            if (lastGame.Player1 == dave)
+            Game lastGame = result.First(g => g.Player1.Name == "Dave" || g.Player2.Name == "Dave");
+            if (lastGame.Player1.Name == "Dave")
             {
                 Assert.That(middlePlayers.Contains(lastGame.Player2));
             }
@@ -167,14 +168,15 @@ namespace Swiss.Tests
         [Test]
         public void Where_Brackets_Finish_With_An_Odd_Number_In_The_Last_Group_The_Last_Game_Is_A_Bye()
         {
-            Player alice = new Player() { Name = "Alice", Points = 3 };
-            Player bob = new Player() { Name = "Bob", Points = 1 };
-            Player charlie = new Player() { Name = "Charlie", Points = 1 };
-            Player dave = new Player() { Name = "Dave", Points = 0 };
-            Player ed = new Player() {Name = "Ed", Points = 0};
-            Player fred = new Player() { Name = "Fred", Points = 0,Dropped = true};
-
-            List<Player> players = new List<Player>() { alice, bob, charlie, dave, ed, fred};
+            List<Player> players = new List<Player>()
+            {
+                new Player() {Name = "Alice", Points = 3},
+                new Player() {Name = "Bob", Points = 1},
+                new Player() {Name = "Charlie", Points = 1},
+                new Player() {Name = "Dave", Points = 0},
+                new Player() {Name = "Ed", Points = 0},
+                new Player() {Name = "Fred", Points = 0, Dropped = true}
+            };
 
             Pairer pairer = new Pairer();
 
@@ -190,15 +192,16 @@ namespace Swiss.Tests
         [Test]
         public void In_The_Last_Bracket_Assign_The_Bye_To_A_Player_Who_Has_Not_Had_A_Bye()
         {
-            Player alice = new Player() { Name = "Alice", Points = 3 };
-            Player bob = new Player() { Name = "Bob", Points = 3 };
-            Player charlie = new Player() { Name = "Charlie", Points = 1 };
-            Player dave = new Player() { Name = "Dave", Points = 1 };
-            Player ed = new Player() { Name = "Ed", Points = 0, Bye = true };
-            Player fred = new Player() { Name = "Fred", Points = 0, Bye = true};
-            Player george = new Player() { Name = "George", Points = 0 };
-
-            List<Player> players = new List<Player>() { alice, bob, charlie, dave, ed, fred, george };
+            List<Player> players = new List<Player>()
+            {
+                new PlayerBuilder().WithName("Alice").WithPoints(3).Build(),
+                new PlayerBuilder().WithName("Bob").WithPoints(3).Build(),
+                new PlayerBuilder().WithName("Charlie").WithPoints(1).Build(),
+                new PlayerBuilder().WithName("Dave").WithPoints(1).Build(),
+                new PlayerBuilder().WithName("Ed").WithPoints(0).WithBye(true).Build(),
+                new PlayerBuilder().WithName("Fred").WithPoints(0).WithBye(true).Build(),
+                new PlayerBuilder().WithName("George").WithPoints(0).WithBye(false).Build()
+            };
 
             Pairer pairer = new Pairer();
 
