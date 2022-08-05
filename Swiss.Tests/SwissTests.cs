@@ -198,7 +198,7 @@ namespace Swiss.Tests
             Player fred = new Player() { Name = "Fred", Points = 0, Bye = true};
             Player george = new Player() { Name = "George", Points = 0 };
 
-            List<Player> players = new List<Player>() { alice, bob, charlie, dave, ed, fred };
+            List<Player> players = new List<Player>() { alice, bob, charlie, dave, ed, fred, george };
 
             Pairer pairer = new Pairer();
 

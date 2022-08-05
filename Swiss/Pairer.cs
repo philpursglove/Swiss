@@ -52,7 +52,14 @@ public class Pairer
             while (bracketPlayers.Any())
             {
                 Game newGame = new Game();
-                newGame.Player1 = bracketPlayers.Random();
+                if (bracketPlayers.Any(p => p.Bye))
+                {
+                    newGame.Player1 = bracketPlayers.Where(p => p.Bye).Random();
+                }
+                else
+                {
+                    newGame.Player1 = bracketPlayers.Random();
+                }
                 bracketPlayers.Remove(newGame.Player1);
 
                 if (!bracketPlayers.Any())
@@ -61,7 +68,14 @@ public class Pairer
                 }
                 else
                 {
-                    newGame.Player2 = bracketPlayers.Random();
+                    if (bracketPlayers.Any(p => p.Bye))
+                    {
+                        newGame.Player2 = bracketPlayers.Where(p => p.Bye).Random();
+                    }
+                    else
+                    {
+                        newGame.Player2 = bracketPlayers.Random();
+                    }
                     bracketPlayers.Remove(newGame.Player2);
                 }
 
