@@ -1,36 +1,14 @@
 namespace Swiss.Tests
 {
     [TestFixture]
-    public class SwissTests
+    public class PointsStrategyTests
     {
+        private Pairer pairer;
+
         [SetUp]
         public void Setup()
         {
-        }
-
-        [Test]
-        public void Players_Are_Matched_Randomly()
-        {
-            Player alice = new Player() { Name = "Alice" };
-            Player bob = new Player() { Name = "Bob" };
-            Player charlie = new Player() { Name = "Charlie" };
-            Player dave = new Player() { Name = "Dave" };
-
-            List<Player> players = new List<Player>() { alice, bob, charlie, dave };
-
-            Pairer pairer = new Pairer();
-
-            var result = pairer.Pair(players);
-
-            List<Player> seenPlayers = new List<Player>();
-
-            foreach (Game game in result)
-            {
-                Assert.That(players.Except(seenPlayers).Contains(game.Player1));
-                seenPlayers.Add(game.Player1);
-                Assert.That(players.Except(seenPlayers).Contains(game.Player2));
-                seenPlayers.Add(game.Player2);
-            }
+            pairer = new Pairer(new PointsPairingStrategy());
         }
 
         [Test]
@@ -41,8 +19,6 @@ namespace Swiss.Tests
             Player charlie = new Player() { Name = "Charlie" };
 
             List<Player> players = new List<Player>() { alice, bob, charlie };
-
-            Pairer pairer = new Pairer();
 
             var result = pairer.Pair(players);
 
@@ -65,8 +41,6 @@ namespace Swiss.Tests
                 players.Add(player);
             }
 
-            Pairer pairer = new Pairer();
-
             var result = pairer.Pair(players);
 
             Assert.That(result.Count, Is.EqualTo(expectedNumberOfGames));
@@ -81,8 +55,6 @@ namespace Swiss.Tests
             Player dave = new Player() { Name = "Dave", Dropped = true };
 
             List<Player> players = new List<Player>() { alice, bob, charlie, dave };
-
-            Pairer pairer = new Pairer();
 
             var result = pairer.Pair(players);
 
@@ -100,8 +72,6 @@ namespace Swiss.Tests
             Player dave = new Player() { Name = "Dave", Points = 0 };
 
             List<Player> players = new List<Player>() { alice, bob, charlie, dave };
-
-            Pairer pairer = new Pairer();
 
             var result = pairer.Pair(players);
 
@@ -135,8 +105,6 @@ namespace Swiss.Tests
                 new Player() { Name = "Charlie", Points = 1 },
                 new Player() { Name = "Dave", Points = 0 }
             };
-
-            Pairer pairer = new Pairer();
 
             var result = pairer.Pair(players);
 
@@ -178,8 +146,6 @@ namespace Swiss.Tests
                 new Player() {Name = "Fred", Points = 0, Dropped = true}
             };
 
-            Pairer pairer = new Pairer();
-
             var result = pairer.Pair(players);
 
             // One of bob or charlie must be paired with alice
@@ -202,8 +168,6 @@ namespace Swiss.Tests
                 new PlayerBuilder().WithName("Fred").WithPoints(0).WithBye(true).Build(),
                 new PlayerBuilder().WithName("George").WithPoints(0).WithBye(false).Build()
             };
-
-            Pairer pairer = new Pairer();
 
             var result = pairer.Pair(players);
 
