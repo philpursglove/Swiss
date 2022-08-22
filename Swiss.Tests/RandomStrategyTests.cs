@@ -13,10 +13,10 @@ public class RandomStrategyTests
     [Test]
     public void Players_Are_Matched_Randomly()
     {
-        Player alice = new Player() { Name = "Alice" };
-        Player bob = new Player() { Name = "Bob" };
-        Player charlie = new Player() { Name = "Charlie" };
-        Player dave = new Player() { Name = "Dave" };
+        Player alice = new PlayerBuilder().WithName("Alice").Build();
+        Player bob = new PlayerBuilder().WithName("Bob").Build();
+        Player charlie = new PlayerBuilder().WithName("Charlie").Build();
+        Player dave = new PlayerBuilder().WithName("Dave").Build();
 
         List<Player> players = new List<Player>() { alice, bob, charlie, dave };
 
