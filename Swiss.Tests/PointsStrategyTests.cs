@@ -14,9 +14,9 @@ namespace Swiss.Tests
         [Test]
         public void For_An_Odd_Number_Of_Players_The_Last_Player_Is_A_Bye()
         {
-            Player alice = new Player() { Name = "Alice" };
-            Player bob = new Player() { Name = "Bob" };
-            Player charlie = new Player() { Name = "Charlie" };
+            Player alice = new PlayerBuilder().WithName("Alice").Build();
+            Player bob = new PlayerBuilder().WithName("Bob").Build();
+            Player charlie = new PlayerBuilder().WithName("Charlie").Build();
 
             List<Player> players = new List<Player>() { alice, bob, charlie };
 
@@ -49,9 +49,9 @@ namespace Swiss.Tests
         [Test]
         public void A_Dropped_Player_Is_Not_Paired()
         {
-            Player alice = new Player() { Name = "Alice" };
-            Player bob = new Player() { Name = "Bob" };
-            Player charlie = new Player() { Name = "Charlie" };
+            Player alice = new PlayerBuilder().WithName("Alice").Build();
+            Player bob = new PlayerBuilder().WithName("Bob").Build();
+            Player charlie = new PlayerBuilder().WithName("Charlie").Build();
             Player dave = new Player() { Name = "Dave", Dropped = true };
 
             List<Player> players = new List<Player>() { alice, bob, charlie, dave };
@@ -66,9 +66,9 @@ namespace Swiss.Tests
         [Test]
         public void Players_Get_Matched_With_Players_On_Equal_Points()
         {
-            Player alice = new Player() { Name = "Alice", Points = 3 };
-            Player bob = new Player() { Name = "Bob", Points = 3 };
-            Player charlie = new Player() { Name = "Charlie", Points = 0 };
+            Player alice = new PlayerBuilder().WithName("Alice").WithPoints(3).Build();
+            Player bob = new PlayerBuilder().WithName("Bob").WithPoints(3).Build();
+            Player charlie = new PlayerBuilder().WithName("Charlie").Build();
             Player dave = new Player() { Name = "Dave", Points = 0 };
 
             List<Player> players = new List<Player>() { alice, bob, charlie, dave };
@@ -174,12 +174,6 @@ namespace Swiss.Tests
             Game lastGame = result.Last();
             Assert.That(lastGame.Player1.Name, Is.EqualTo("George"));
             Assert.That(lastGame.Player2.Name, Is.EqualTo("BYE"));
-        }
-
-        [Test]
-        public void Avoid_Repeated_Games()
-        {
-            Assert.That(true, Is.False);
         }
     }
 }
