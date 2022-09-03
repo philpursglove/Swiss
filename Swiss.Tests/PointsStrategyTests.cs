@@ -14,9 +14,9 @@ namespace Swiss.Tests
         [Test]
         public void For_An_Odd_Number_Of_Players_The_Last_Player_Is_A_Bye()
         {
-            Player alice = new PlayerBuilder().WithName("Alice").Build();
-            Player bob = new PlayerBuilder().WithName("Bob").Build();
-            Player charlie = new PlayerBuilder().WithName("Charlie").Build();
+            Player alice = new PlayerBuilder().WithName("Alice");
+            Player bob = new PlayerBuilder().WithName("Bob");
+            Player charlie = new PlayerBuilder().WithName("Charlie");
 
             List<Player> players = new List<Player>() { alice, bob, charlie };
 
@@ -49,9 +49,9 @@ namespace Swiss.Tests
         [Test]
         public void A_Dropped_Player_Is_Not_Paired()
         {
-            Player alice = new PlayerBuilder().WithName("Alice").Build();
-            Player bob = new PlayerBuilder().WithName("Bob").Build();
-            Player charlie = new PlayerBuilder().WithName("Charlie").Build();
+            Player alice = new PlayerBuilder().WithName("Alice");
+            Player bob = new PlayerBuilder().WithName("Bob");
+            Player charlie = new PlayerBuilder().WithName("Charlie");
             Player dave = new Player() { Name = "Dave", Dropped = true };
 
             List<Player> players = new List<Player>() { alice, bob, charlie, dave };
@@ -66,9 +66,9 @@ namespace Swiss.Tests
         [Test]
         public void Players_Get_Matched_With_Players_On_Equal_Points()
         {
-            Player alice = new PlayerBuilder().WithName("Alice").WithPoints(3).Build();
-            Player bob = new PlayerBuilder().WithName("Bob").WithPoints(3).Build();
-            Player charlie = new PlayerBuilder().WithName("Charlie").Build();
+            Player alice = new PlayerBuilder().WithName("Alice").WithPoints(3);
+            Player bob = new PlayerBuilder().WithName("Bob").WithPoints(3);
+            Player charlie = new PlayerBuilder().WithName("Charlie");
             Player dave = new Player() { Name = "Dave", Points = 0 };
 
             List<Player> players = new List<Player>() { alice, bob, charlie, dave };
@@ -98,9 +98,9 @@ namespace Swiss.Tests
         [Test]
         public void Where_A_Bracket_Has_An_Odd_Number_Of_Players_A_Random_Player_From_The_Next_Bracket_Is_Paired_Up()
         {
-            Player alice = new PlayerBuilder().WithName("Alice").WithPoints(3).Build();
-            Player bob = new PlayerBuilder().WithName("Bob").WithPoints(1).Build();
-            Player charlie = new PlayerBuilder().WithName("Charlie").WithPoints(1).Build();
+            Player alice = new PlayerBuilder().WithName("Alice").WithPoints(3);
+            Player bob = new PlayerBuilder().WithName("Bob").WithPoints(1);
+            Player charlie = new PlayerBuilder().WithName("Charlie").WithPoints(1);
             Player dave = new Player() { Name = "Dave", Points = 0 };
 
             List<Player> players = new List<Player> { alice, bob, charlie, dave };
@@ -137,12 +137,12 @@ namespace Swiss.Tests
         {
             List<Player> players = new List<Player>()
             {
-                new PlayerBuilder().WithName("Alice").WithPoints(3).Build(),
-                new PlayerBuilder().WithName("Bob").WithPoints(1).Build(),
-                new PlayerBuilder().WithName("Charlie").WithPoints(1).Build(),
-                new PlayerBuilder().WithName("Dave").WithPoints(0).Build(),
-                new PlayerBuilder().WithName("Ed").WithPoints(0).Build(),
-                new PlayerBuilder().WithName("Fred").WithPoints(0).WithDropped(true).Build()
+                new PlayerBuilder().WithName("Alice").WithPoints(3),
+                new PlayerBuilder().WithName("Bob").WithPoints(1),
+                new PlayerBuilder().WithName("Charlie").WithPoints(1),
+                new PlayerBuilder().WithName("Dave").WithPoints(0),
+                new PlayerBuilder().WithName("Ed").WithPoints(0),
+                new PlayerBuilder().WithName("Fred").WithPoints(0).WithDropped(true)
             };
 
             var result = pairer.Pair(players);
@@ -159,13 +159,13 @@ namespace Swiss.Tests
         {
             List<Player> players = new List<Player>()
             {
-                new PlayerBuilder().WithName("Alice").WithPoints(3).Build(),
-                new PlayerBuilder().WithName("Bob").WithPoints(3).Build(),
-                new PlayerBuilder().WithName("Charlie").WithPoints(1).Build(),
-                new PlayerBuilder().WithName("Dave").WithPoints(1).Build(),
-                new PlayerBuilder().WithName("Ed").WithPoints(0).WithBye(true).Build(),
-                new PlayerBuilder().WithName("Fred").WithPoints(0).WithBye(true).Build(),
-                new PlayerBuilder().WithName("George").WithPoints(0).WithBye(false).Build()
+                new PlayerBuilder().WithName("Alice").WithPoints(3),
+                new PlayerBuilder().WithName("Bob").WithPoints(3),
+                new PlayerBuilder().WithName("Charlie").WithPoints(1),
+                new PlayerBuilder().WithName("Dave").WithPoints(1),
+                new PlayerBuilder().WithName("Ed").WithPoints(0).WithBye(true),
+                new PlayerBuilder().WithName("Fred").WithPoints(0).WithBye(true),
+                new PlayerBuilder().WithName("George").WithPoints(0).WithBye(false)
             };
 
             var result = pairer.Pair(players);
